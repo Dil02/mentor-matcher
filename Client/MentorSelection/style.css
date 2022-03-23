@@ -1,0 +1,18 @@
+.navbar {
+  background-color: rgb(115, 0, 247);
+  color: #FFFFFF;
+}
+
+.btn-1 {
+    background-color: #ecbbff;
+}
+
+.btn-2 {
+    background-color: #bdffff;
+}
+
+.bar {
+  position: absolute;
+  bottom: 10pt;
+  width: 93%;
+}
