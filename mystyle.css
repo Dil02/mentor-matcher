@@ -1,0 +1,94 @@
+body {
+    background: #3f0149
+}
+
+.form-control:focus {
+
+    border-color: #460152
+}
+
+.profile-button {
+    background: #51015f;
+
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+
+}
+
+.profile-button:active {
+    background: #682773;
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+
+.description{
+    size: 5em;
+    font-size: x-large;
+}
+
+.button{
+    font-size: small;
+    size: 50%;
+}
+
+img.fdmlogo { 
+    width: 6em;
+    padding-left: 1em;
+   }
+   
+   nav {
+     padding: 0;
+     margin: 0;
+     list-style-type: none;
+     float: left;
+     width: 100%;
+     background-color: #b396d9;
+     border-bottom: 2px solid #2C2436; 
+   }
+   
+   nav li a {
+     position: sticky;
+     float: left;
+     font-family: "Gill Sans", sans-serif;
+     padding: 0.5em;
+     text-decoration: none;
+   }
+   
+   nav a.home:hover, a.about:hover, a.faqs:hover, a.contact:hover, a.login:hover, a.register:hover {
+     color: #E31B6D; /*DARK PINK*/
+   }
+   
+   a.home, a.about, a.faqs, a.contact, a.login, a.register {
+     font-size: 13pt;
+     margin-top: 0.5em;
+     color: white;
+   }
+   
+   a.login, a.register {
+     float: right;
+     margin-top: 0.5em;
+     color: white;
+     background-color:  #2C2436; 
+     border-radius: 45px;
+   }
+   
+   li.login, li.register {
+     font-size: 12pt;
+     float: right;
+     margin-right: 0.5em;
+     opacity: 80%;
+   }
+   
+   li.login:hover, li.register.hover{
+   color: #E31B6D;
+   }
