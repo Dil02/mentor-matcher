@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import "./App.css";
 import {auth} from "./firebase-config";
 import { FirebaseError } from 'firebase/app';
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
+import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
 import {db} from './firebase-config';
 
 function App() {
@@ -17,15 +17,23 @@ function App() {
   const [user, setUser] = useState({});
   const usersCollectionRef=collection(db, "Users");
 
+
   onAuthStateChanged(auth,(currentUser) => {
     setUser(currentUser)
   })
 
+  //Main Register Function
   const register = async () => {
     try
     {
       const user = await createUserWithEmailAndPassword(auth, registerEmail,registerPassword);
-      await addDoc(usersCollectionRef, {emailAddress: registerEmail, password: registerPassword});
+
+      setDoc(doc(db,"Users",registerEmail),{  //"Users"- specifies the collection
+        emailAddress: registerEmail, //First field
+        password: registerPassword  //Second field
+          //etc...
+      });
+
       console.log(user);
     } 
     catch(error)
@@ -68,9 +76,13 @@ function App() {
 
       <section>
         <h4>User Logged In:</h4>
-        {user?.email}
+        {user?.uid}
         <button onClick={logout}>Sign Out</button>
       </section>
+
+      <article>
+        <h2></h2>
+      </article>
 
 
     </div>
