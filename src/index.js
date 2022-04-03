@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Selection from './Selection';
-import Registration from './Registration'
+import Selection from './selection/Selection';
+import Registration from './registration/Registration';
+// import Login from './login/Login';
+
 import Home from './home';
 import reportWebVitals from './reportWebVitals';
+import logo from './logo.png';
 import {
   BrowserRouter as Router,
   Switch,
