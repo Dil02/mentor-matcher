@@ -1,0 +1,121 @@
+body{
+	background-color: rgb(219,246,255)
+}
+
+table{
+	height: 25%;
+}
+
+.box1{
+	background-color: rgb(208,184,221);
+	width: 30%;
+	height: 45%;
+	padding:5%;
+	margin-top: 10%;
+	margin-left:5%;
+}
+
+h2{
+	text-align:center;
+}
+
+.button1{
+	color: black;
+	text-align: center;
+	font-size:16px;
+	cursor:pointer;
+	width: 120px;
+	margin: 0 auto;
+	
+}
+
+.box2{
+	background-color: rgb(207,221,225);
+	width:45%;
+	height: 25%;
+	margin-left:5%;
+	margin-top: 10%;
+	margin-right: 5%
+	padding:5%;
+}
+
+.button2{
+	color: black;
+	cursor:pointer;
+	
+}
+
+.box3{
+	background-color: rgb(207,221,225);
+	width:45%;
+	height: 25%;
+	margin-left:5%;
+	margin-top: 5%;
+	margin-right: 5%
+	padding:5%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center2{
+  display: flex;
+  justify-content: center;
+}
+
+img.fdmlogo { 
+ width: 6em;
+ padding-left: 1em;
+}
+
+nav {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  float: left;
+  width: 100%;
+  background-color: #b396d9;
+  border-bottom: 2px solid #2C2436; 
+}
+
+nav li a {
+  position: sticky;
+  float: left;
+  font-family: "Gill Sans", sans-serif;
+  padding: 0.5em;
+  text-decoration: none;
+}
+
+nav a.home:hover, a.about:hover, a.faqs:hover, a.contact:hover, a.login:hover, a.register:hover {
+  color: #E31B6D; /*DARK PINK*/
+}
+
+a.home, a.help, a.faqs, a.contact, a.logout{
+  font-size: 13pt;
+  margin-top: 0.5em;
+  color: white;
+}
+
+a.logout{
+  float: right;
+  margin-top: 0.5em;
+  color: white;
+  background-color:  #2C2436; 
+  border-radius: 45px;
+}
+
+li.logout{
+  font-size: 12pt;
+  float: right;
+  margin-right: 0.5em;
+  opacity: 80%;
+}
+
+li.logout{
+color: #E31B6D;
+}
+
+
