@@ -16,6 +16,8 @@ function Registration() {
 
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword]= useState("");
+
+    const [mentorBoolean, setMentorBoolean] = useState("");
     
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword]= useState("");
@@ -23,7 +25,7 @@ function Registration() {
     const [user, setUser] = useState({});
     const usersCollectionRef=collection(db, "Users");
   
-  
+
     onAuthStateChanged(auth,(currentUser) => {
       setUser(currentUser)
     })
@@ -32,13 +34,25 @@ function Registration() {
     const register = async () => {
       try
       {
-        const user = await createUserWithEmailAndPassword(auth, registerEmail,registerPassword);
-  
-        setDoc(doc(db,"Users",registerEmail),{  //"Users"- specifies the collection
-          emailAddress: registerEmail, //First field
-          password: registerPassword  //Second field
-            //etc...
-        });
+        const user = await createUserWithEmailAndPassword(auth, registerEmail,registerPassword, mentorBoolean);
+        console.log('Here');
+        console.log(mentorBoolean);
+        console.log('Here');
+        if(mentorBoolean == true){
+            setDoc(doc(db,"Mentors",registerEmail),{  //"Users"- specifies the collection
+                emailAddress: registerEmail, //First field
+                password: registerPassword  //Second field
+                  //etc...
+              });
+        }
+        else{
+            setDoc(doc(db,"Mentees",registerEmail),{  //"Users"- specifies the collection
+                emailAddress: registerEmail, //First field
+                password: registerPassword  //Second field
+                  //etc...
+              });
+        }
+        
   
         console.log(user);
       } 
@@ -48,20 +62,20 @@ function Registration() {
       }
     };
   
-    const login = async () => {
-      try{
-        const user = await signInWithEmailAndPassword(auth, loginEmail,loginPassword);
-        console.log(user);
-        } catch(error)
-        {
-          console.log(error.message);
-        }
-    };
+    // const login = async () => {
+    //   try{
+    //     const user = await signInWithEmailAndPassword(auth, loginEmail,loginPassword);
+    //     console.log(user);
+    //     } catch(error)
+    //     {
+    //       console.log(error.message);
+    //     }
+    // };
   
-    const logout = async () => {
+    // const logout = async () => {
   
-      await signOut(auth);
-    };
+    //   await signOut(auth);
+    // };
   
     
 
@@ -74,7 +88,7 @@ this line is here to prevent firefox bug
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     <div className="signup-form">
-                        <form action="" method="POST" className="mt-5 border p-4 bg-light shadow">
+                        <div className="mt-5 border p-4 bg-light shadow">
                             
                             <h4 className="text-secondary text-center float-lg-none" > <img src={logo} className="logo-form" width='100px' /> Mentor Matcher Registration Form </h4>
                             <hr/>
@@ -92,7 +106,9 @@ this line is here to prevent firefox bug
 
                                 <div className="mb-3 col-md-12">
                                     <label>Email Address:<span className="text-danger">*</span></label>
-                                    <input type="text" name="password" className="form-control" placeholder="Enter Email Address" required />
+                                    <input type="text" name="password" className="form-control" placeholder="Enter Email Address" required 
+                                        onChange={(event) => {setRegisterEmail(event.target.value);}}
+                                    />
                                 </div>
                                 <div className="mb-3 col-md-12">
                                     <label>Phone Number<span className="text-danger">*</span></label>
@@ -100,24 +116,47 @@ this line is here to prevent firefox bug
                                 </div>
                                 <div className="mb-3 col-md-12">
                                     <label>Password<span className="text-danger">*</span></label>
-                                    <input type="password" name="password" className="form-control" placeholder="Enter Password"required />
+                                    <input type="password" name="password" className="form-control" placeholder="Enter Password" required 
+                                        onChange={(event) =>{setRegisterPassword(event.target.value);}}
+                                    />
                                 </div>
                                 <div className="mb-3 col-md-12">
                                     <label>Confirm Password<span className="text-danger">*</span></label>
                                     <input type="password" name="confirmpassword" className="form-control " placeholder="Confirm Password" required />
                                 </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="mentor" id="flexCheckDefault" onChange={(event) =>{setMentorBoolean(event.target.checked);}} />
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Register as Mentor
+                                    </label>
+                                </div>
+
+
                                 <div className="col-md-4 offset-md-4">
                                     <button className="btn btn-danger float-">Cancel</button>
                                     <button className="btn btn-primary float-end" onClick={register}>Register</button>
                                 </div>
                             
                             </div>
-                        </form>
+                        </div>
                         <p className="text-center mt-3 text-secondary">If you already have an account, <a href="#">Click here to Login</a> </p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <form action="/action_page.php">
+    <label for="cars">Choose a car:</label>
+    <select name="cars" id="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="opel">Opel</option>
+        <option value="audi">Audi</option>
+    </select>
+    <br/>
+    <input type="submit" value="Submit"/>
+    </form>
 
 
 
