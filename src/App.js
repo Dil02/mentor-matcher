@@ -1,64 +1,78 @@
-import {useState, useEffect} from "react";
-import './App.css';
-import {db} from './firebase-config';
+import { useState } from 'react';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import "./App.css";
+import {auth} from "./firebase-config";
+import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
+import {db} from './firebase-config';
 
 function App() {
-  const [newEmailAddress, setNewEmailAddress] = useState("");
-  const [newPassword, setNewPassword] = useState("");
 
-  const [updatedPassword, setUpdatedPassword] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword]= useState("");
+  
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword]= useState("");
 
+  const [user, setUser] = useState({});
+  const usersCollectionRef=collection(db, "Users");
 
-  const [users, setUsers] = useState([]);
-  const usersCollectionRef=collection(db, "users");
+  onAuthStateChanged(auth,(currentUser) => {
+    setUser(currentUser)
+  })
 
-  const createUser = async () => {
-    await addDoc(usersCollectionRef, {emailAddress: newEmailAddress, password: newPassword});
-  }
-
-  const changePassword = async (id) => {
-    const userDoc = doc(db, "users", id);
-    const newFields = {password: updatedPassword}
-    await updateDoc(userDoc, newFields);
-  }
-
-  const deleteUser = async (id) => {
-    const userDoc = doc(db, "users", id);
-    await deleteDoc(userDoc);
-  }
-
-
-  useEffect(() => {
-    const getUsers = async () => {
-        const data = await getDocs(usersCollectionRef);
-        setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        //In the above line we are looping through the documents in the collection 
-        // and setting the users array to be equal to an array of the document data and id for each document.
+  const register = async () => {
+    try
+    {
+      const user = await createUserWithEmailAndPassword(auth, registerEmail,registerPassword);
+      await addDoc(usersCollectionRef, {emailAddress: registerEmail, password: registerPassword});
+      console.log(user);
+    } 
+    catch(error)
+    {
+      console.log(error.message);
     }
+  };
 
-    getUsers();
-  }, []);
+  const login = async () => {
+    try{
+      const user = await signInWithEmailAndPassword(auth, loginEmail,loginPassword);
+      console.log(user);
+      } catch(error)
+      {
+        console.log(error.message);
+      }
+  };
+
+  const logout = async () => {
+
+    await signOut(auth);
+  };
+
+
   return (
-    <div className="App">
-      <input placeholder="Email Address..." onChange={(event) => {setNewEmailAddress(event.target.value);}}></input>
-      <input placeholder="Password..." onChange={(event) => {setNewPassword(event.target.value);}}></input>
+    <div className='App'>
+      <section>
+        <h3>Register User</h3>
+        <input placeholder='Email..' onChange={(event) =>{setRegisterEmail(event.target.value);}}></input>
+        <input placeholder="Password.." onChange={(event) =>{setRegisterPassword(event.target.value);}}></input>
+        <button onClick={register}>Create User</button>
+      </section>
 
-      <button onClick={createUser}>Create User</button>
+      <section>
+        <h3>Login</h3>
+        <input placeholder="Email..." onChange={(event) =>{setLoginEmail(event.target.value);}}></input>
+        <input placeholder="Password..." onChange={(event) =>{setLoginPassword(event.target.value);}}></input>
+        <button onClick={login}>Login</button>
+      </section>
 
-      {users.map((user) => {
-        return(
-          <article>
-            <h1>Email Address: {user.emailAddress}</h1>
-            <h1>Password: {user.password}</h1>
-            <h1>Username: {user.username}</h1>
-            <input placeholder="New Password..." onChange={(event) => {setUpdatedPassword(event.target.value);}}></input>
-            <button onClick={() => {changePassword(user.id)}}>Change Password</button>
-            <button onClick={() => {deleteUser(user.id)}}>Delete User</button>
+      <section>
+        <h4>User Logged In:</h4>
+        {user?.email}
+        <button onClick={logout}>Sign Out</button>
+      </section>
 
-          </article>
-        );
-      })}
+
     </div>
   );
 }
