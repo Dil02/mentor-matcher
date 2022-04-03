@@ -1,6 +1,5 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
 }
 
 form {
@@ -8,7 +7,7 @@ form {
   margin-bottom: 10%;
   margin-left: 25%;
   margin-right: 25%;
-  border: 3px solid #337AB7;
+  border: 3px solid #A286C8;
   border-radius: 45px;
   text-align: center;
 }
@@ -41,4 +40,8 @@ button:hover {
 
 .back {
   background-color: #f44336;
+}
+
+.purple {
+  color:#A286C8
 }
