@@ -1,0 +1,15 @@
+#display_image{
+    width: 117px;
+    height: 150px;
+    /* aspect ratio 0.78, passport size UK */
+
+    border: 1px solid black;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 1em;
+}
+
+.logo-form{
+
+    filter:invert(1);
+}
