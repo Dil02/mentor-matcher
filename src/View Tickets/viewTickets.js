@@ -3,7 +3,7 @@ import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
 import {db} from './firebase-config';
 import "./reset.css"; //Resets styling
-import "./View Tickets/viewTickets.css";
+import "./viewTickets.css";
 
 function App() {
 
