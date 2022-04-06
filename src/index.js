@@ -8,7 +8,7 @@ import Registration from './registration/Registration';
 import MenteeHome from './menteeHome/MenteeHome';
 import AdminHome from './adminHome/AdminHome';
 import Editprofile from './editProfile/editprofile';
-// import RaiseTickets from './RaiseTickets/raiseTickets';
+import RaiseTickets from './RaiseTickets/raiseTickets';
 import reportWebVitals from './reportWebVitals';
 import logo from './logo.png';
 import {auth} from './firebase/firebase-config'
@@ -98,9 +98,9 @@ ReactDOM.render(
           <Route path="/AdminHome">
             <AdminHome />
           </Route>
-          {/* <Route path="/RaiseTickets">
+          <Route path="/RaiseTickets">
             <RaiseTickets />
-          </Route> */}
+          </Route>
         </Switch>
       </Router>
   </React.StrictMode>,
