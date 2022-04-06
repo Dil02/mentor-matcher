@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import { FirebaseError } from 'firebase/app';
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
+import {collection, getDoc, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore, where, query} from 'firebase/firestore';
 import {db} from './firebase/firebase-config';
 import "./reset.css"; //Resets styling
 import "./View Tickets/viewTickets.css";
@@ -14,10 +14,11 @@ function App() {
   useEffect(() => {
     const getTickets = async () => {
         const data = await getDocs(ticketsCollectionRef);
-        setDisplayTickets(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        //setDisplayTickets(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         setAllTickets(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         //In the above line we are looping through the documents in the collection 
         // and setting the users array to be equal to an array of the document data and id for each document.
+        tempFunction();
     }
 
     getTickets();
@@ -31,44 +32,28 @@ function App() {
     window.location.reload();
   };
 
-  //This function sorts the tickets based on date and resolved status. 
-  const sortTickets = (value) => {
+  //Used to find a particular document within a collection.
+  const tempFunction = async() =>{
+    const newArray=[]
 
-    let newArray = [];
+    //Used to get documents which meet certain criteria:
+    // const q=query(ticketsCollectionRef,where("category","==","Pairings"));
 
-    if(value=="All"){setDisplayTickets(allTickets); return;}
+    // const querySnapshot = await getDocs(q);
+    // querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   //console.log(doc.id, " => ", doc.data());
+    //   newArray.push(doc.data());
+    // }); console.log(newArray); setDisplayTickets(newArray);
+  
+    //Used to get a single particular document:
+    const docRef = doc(db, "Tickets", "yKTOKR5I665gjWq92RM0");
+    const docSnap = await getDoc(docRef);
 
-    //Sorts by Date:
-    if((value=="Newest") || (value=="Oldest"))
-    {
-      newArray=[...allTickets];
-      for (let i = 1; i < newArray.length; i++) {
-            // Choosing the first element in our unsorted subarray
-            let current = newArray[i];
-            // The last element of our sorted subarray
-            let j = i-1; 
-            while ((j > -1) && (Date.parse(current.dateCreated) < Date.parse(newArray[j].dateCreated))) {
-                newArray[j+1] = newArray[j];
-                j--;
-            }
-            newArray[j+1] = current;
-      }
-      if(value=="Newest"){setDisplayTickets(newArray.reverse());} //Flips the array from Newest to Oldest.
-      else{setDisplayTickets(newArray);}
-      return;
-    }
-
-    //Sorts Resolved or Unresolved:
-    for(let i=0; i<allTickets.length; i++)
-    {
-      if(allTickets[i].status==value)
-      {
-        newArray.push(allTickets[i]);
-      }
-    }
-      setDisplayTickets(newArray);
-      return;
-    };
+    newArray.push(docSnap.data());
+    setDisplayTickets(newArray);
+  
+  }
 
   return (
     <div className="App">
@@ -76,16 +61,6 @@ function App() {
       <div className="container fluid">
 
         <h1>View Tickets</h1>
-
-        <select className="" id="categories" defaultValue={"default"} onChange={(event) => {sortTickets(event.target.value);}}>
-          <option className="" value="default" disabled>Sort By</option>
-          <option value="All">All</option>
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-          <option value="Resolved">Resolved</option>
-          <option value="Unresolved">Unresolved</option>
-        </select>
-
 
         {displayTickets.map((ticket) => {
           return(
