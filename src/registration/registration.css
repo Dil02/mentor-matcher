@@ -1,3 +1,4 @@
+
 #display_image{
     width: 117px;
     height: 150px;
@@ -7,9 +8,4 @@
     background-position: center;
     background-size: cover;
     margin-bottom: 1em;
-}
-
-.logo-form{
-
-    filter:invert(1);
 }

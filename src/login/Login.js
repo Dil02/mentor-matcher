@@ -1,6 +1,6 @@
-import './Login.css';
+//import './Login.css';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import {  onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
 import {auth} from ".././firebase/firebase-config";
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
@@ -11,25 +11,38 @@ function Login() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword]= useState("");
 
-    const login = async () => {
+    const [user, setUser] = useState({});
+
+    onAuthStateChanged(auth,(currentUser) => {
+        setUser(currentUser)
+      })
+
+      
+    const login = async (e) => {
+        e.preventDefault();
         try{
           const user = await signInWithEmailAndPassword(auth, loginEmail,loginPassword);
-          console.log(user);
+          
           } catch(error)
           {
+            alert("Invalid Login Details");
             console.log(error.message);
+            document.getElementById('Login').reset();
+            
           }
       };
     
+    
     return (
+<div>
+.      
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-8 offset-md-2">
+                <div className="col-md-4 offset-md-4">
                     <div className="signup-form">
                         <form action="" className="mt-5 border p-4 bg-light shadow">
                             
                             <h4 className="text-secondary text-center float-lg-none">  Login </h4>
-                            
                             <hr/>
                             <div className="row">
                                 
@@ -44,8 +57,7 @@ function Login() {
                                 </div>
                                 
                                 <div className="col-md-4 offset-md-4">
-                                    <button className="btn btn-danger float-">Back</button>
-                                    <button className="btn btn-primary float-end">Login</button>
+                                    <button onClick={login} className="btn btn-primary float-end" id="Login">Login</button>
                                 </div>
                             
                             </div>
@@ -57,7 +69,9 @@ function Login() {
             </div>
             <script src="imageview.js"></script>
         </div>
+</div>
     );
 }
+
 
 export default Login;

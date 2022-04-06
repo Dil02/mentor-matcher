@@ -1,7 +1,12 @@
 import './registration.css';
 import logo from './logo.png';
 import blankprofile from './profilePic.jpg';
-// import imageview from './imageview';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 // importing libraries
 import { useState } from 'react';
@@ -20,9 +25,7 @@ function Registration() {
     const [registerPassword, setRegisterPassword] = useState("");
     const [registerCPassword, setRegisterCPassowrd] = useState("");
     const [mentorBoolean, setMentorBoolean] = useState("");
-    
-    // const [loginEmail, setLoginEmail] = useState("");
-    // const [loginPassword, setLoginPassword]= useState("");
+
   
     const [user, setUser] = useState({});
     const usersCollectionRef=collection(db, "Users");
@@ -95,18 +98,15 @@ this line is here to prevent firefox bug
 
         <div className="container-fluid ">
             <div className="row">
-                <div className="col-md-8 offset-md-2">
+                <div className="col-md-6 offset-md-3">
                     <div className="signup-form">
                         <div className="mt-5 border p-4 bg-light shadow">
                             
                             <h4 className="text-secondary text-center float-lg-none" > <img src={logo} className="logo-form" width='100px' /> Mentor Matcher Registration Form </h4>
                             <hr/>
                             <div className="row">
-                                <div className="mb-3 col-md-6">
-                                    <div id="display_image"></div>
-                                    <input type="file" id="image_input" accept="image/jpg, image/png" />
-                                </div>
-                                <div className="mb-3 col-md-6">
+
+                                <div className="mb-3 col-md-12">
                                     <label>First Name<span className="text-danger">*</span></label>
                                     <input type="text" name="fname" className="form-control" placeholder="Enter First Name" required 
                                         onChange={(event) => {setRegisterFName(event.target.value);}}
@@ -142,6 +142,11 @@ this line is here to prevent firefox bug
                                     />
                                 </div>
 
+                                <div className="mb-3 col-md-12">
+                                    Password should be minimum 6 characters long<span className="text-danger">*</span>
+                                </div>
+                                
+
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="mentor" id="flexCheckDefault" onChange={(event) =>{setMentorBoolean(event.target.checked);}} />
                                     <label class="form-check-label" for="flexCheckDefault">
@@ -157,16 +162,12 @@ this line is here to prevent firefox bug
                             
                             </div>
                         </div>
-                        <p className="text-center mt-3 text-secondary">If you already have an account, <a href="#">Click here to Login</a> </p>
+                        <p className="text-center mt-3 text-secondary">If you already have an account, <Link style={{float:'none', color:'blue', backgroundColor:'white', borderRadius:'0',marginTop:'0'}} to="/Login" className="register">Click here to Login</Link></p>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-
-{/*  <script src={imageview}></script> */}
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </div>
