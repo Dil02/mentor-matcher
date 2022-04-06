@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import reportWebVitals from './reportWebVitals';
+import logo from './logo.png';
+import {auth} from './firebase/firebase-config'
+import {  onAuthStateChanged, signOut} from 'firebase/auth';
+import { useAuth } from './firebase/firebase-config';
+
+//importing pages
 import Selection from './selection/Selection';
 import Home from './home/home';
 import Login from './login/Login';
@@ -9,11 +16,7 @@ import MenteeHome from './menteeHome/MenteeHome';
 import AdminHome from './adminHome/AdminHome';
 import Editprofile from './editProfile/editprofile';
 import RaiseTickets from './RaiseTickets/raiseTickets';
-import reportWebVitals from './reportWebVitals';
-import logo from './logo.png';
-import {auth} from './firebase/firebase-config'
-import {  onAuthStateChanged, signOut} from 'firebase/auth';
-import { useAuth } from './firebase/firebase-config';
+import ViewTickets from './ViewTickets/viewTickets'
 
 import {
   BrowserRouter as Router,
@@ -77,6 +80,7 @@ ReactDOM.render(
           <li><Link to="/Editprofile" className="Editprofile">Editprofile</Link></li>
           <li><Link to="/AdminHome" className="AdminHome">AdminHome</Link></li>
           <li><Link to="/RaiseTickets" className="RaiseTickets">RaiseTickets</Link></li>
+          <li><Link to="/ViewTickets" className="ViewTickets">ViewTickets</Link></li>
           <LoginButton />
         </nav>
         <Switch>
@@ -100,6 +104,9 @@ ReactDOM.render(
           </Route>
           <Route path="/RaiseTickets">
             <RaiseTickets />
+          </Route>
+          <Route path='/ViewTickets'>
+            <ViewTickets/>
           </Route>
         </Switch>
       </Router>

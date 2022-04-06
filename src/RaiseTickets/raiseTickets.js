@@ -39,7 +39,7 @@ function App() {
         dateResolved : "N/A",
         emailAddress : "Add this",
         phoneNumber : "Add this",
-        status : "New",
+        status : "Unresolved",
         urgent : isUrgent
       });
   }

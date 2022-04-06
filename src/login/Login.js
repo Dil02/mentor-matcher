@@ -56,7 +56,7 @@ function Login() {
                                     <input type="password" name="password" className="form-control" placeholder="Enter Password" onChange={(event) =>{setLoginPassword(event.target.value);}} required />
                                 </div>
                                 
-                                <div className="col-md-4 offset-md-4">
+                                <div className="col-md-4 offset-md-3">
                                     <button onClick={login} className="btn btn-primary float-end" id="Login">Login</button>
                                 </div>
                             

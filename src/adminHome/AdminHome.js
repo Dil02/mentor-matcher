@@ -18,6 +18,7 @@ import {
 // import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
 // import {db} from '../firebase/firebase-config';
 
+import ViewTickets from '../ViewTickets/viewTickets'
 
 import Pairings from './Pairings'
 
@@ -55,6 +56,7 @@ function AdminHome() {
                             <div className="col-md-6 border">
                                 <h5 className="text-secondary text-center float-lg-none">Support Tickets
                                 </h5>
+
                             </div>
                         </div>
 

@@ -102,7 +102,7 @@ this line is here to prevent firefox bug
                     <div className="signup-form">
                         <div className="mt-5 border p-4 bg-light shadow">
                             
-                            <h4 className="text-secondary text-center float-lg-none" > <img src={logo} className="logo-form" width='100px' /> Mentor Matcher Registration Form </h4>
+                            <h4 className="text-secondary text-center float-lg-none" > <img src={logo} className="logo-form" width='100px'style={{filter:"invert(1)"}} /> Mentor Matcher Registration Form </h4>
                             <hr/>
                             <div className="row">
 
