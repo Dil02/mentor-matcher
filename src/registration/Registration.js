@@ -162,7 +162,9 @@ this line is here to prevent firefox bug
                             
                             </div>
                         </div>
-                        <p className="text-center mt-3 text-secondary">If you already have an account, <Link style={{float:'none', color:'blue', backgroundColor:'white', borderRadius:'0',marginTop:'0'}} to="/Login" className="register">Click here to Login</Link></p>
+                        <p className="text-center mt-3 text-secondary">If you already have an account, <Link  to="/Login" className="register">Click here to Login</Link></p>
+
+                        {/* <button className="button2"><Link  to="/Messages">Messages Mentor</Link></button> */}
                     </div>
                 </div>
             </div>

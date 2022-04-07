@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './editProfile/mystyle.css'
 import reportWebVitals from './reportWebVitals';
 import logo from './logo.png';
 import {auth, useAuth, db} from './firebase/firebase-config'
