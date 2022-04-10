@@ -11,7 +11,7 @@ export default function Editprofile(){
 
 
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
-      const profiledoc = doc(db, "Mentors",id);
+      const profiledoc = doc(db, "Mentees",id);
       const newFields = {Qualifications:Qualifications,personalIntroduction:personalIntroduction,sector:sector,firstName: profilefname,presentationskills:presentationskills, surname:surname, location:location,occupation:occupation,designThinking:designThinking,leadershipSkills,leadershipSkills,verbalCommunications:verbalCommunications,careerProgression:careerProgression,coding:coding,phone:phone};
       await updateDoc(profiledoc,newFields);
       
@@ -19,12 +19,12 @@ export default function Editprofile(){
 
     const [users, setUsers] = useState([]);
     const db = getFirestore();
-    const colRef = (collection(db, "Mentors"));
+    const colRef = (collection(db, "Mentees"));
     const newArray=[]
 
     const tempFunction = async() =>{
 
-      const q=query(colRef,where("emailAddress","==", "asif12@gmail.com"));
+      const q=query(colRef,where("emailAddress","==", "mentee@test.com"));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
