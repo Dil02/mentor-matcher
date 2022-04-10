@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
-import {db} from './firebase-config';
+import { getAuth} from "firebase/auth";
+import {db} from '../firebase/firebase-config';
 import "./raiseTickets.css";
 import "./reset.css"; //Resets styling
 
@@ -11,10 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
+
+  const auth= getAuth();
+  const userAuth = auth.currentUser;
+
   const [newCategory, setCategory] = useState("");
   const [newDescription, setDescription] = useState("");
-
-  const [users, setUsers] = useState([]);
 
   const usersCollectionRef=collection(db, "Tickets");
 
@@ -37,8 +40,8 @@ function App() {
         description: newDescription,
         dateCreated: String(new Date()),
         dateResolved : "N/A",
-        emailAddress : "Add this",
-        phoneNumber : "Add this",
+        emailAddress : userAuth.email,
+        phoneNumber : "N/A",
         status : "Unresolved",
         urgent : isUrgent
       });
@@ -64,6 +67,7 @@ function App() {
   }
 
   return (
+    
     <div className="App">
         <Container fluid className="ticket">
           <Row className='pt-2'>

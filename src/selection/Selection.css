@@ -1,0 +1,28 @@
+.btn-1 {
+  background-color: #d8bdff;
+  height: 49em;
+}
+
+.btn-2 {
+  background-color: #bdffff;
+  height: 49em;
+}
+
+.bar {
+position: absolute;
+bottom: 0px;
+left: 0px;
+}
+
+.bar1 {
+background-color: #7a3fc2;
+}
+
+.bar2 {
+background-color: #42b0cc;
+}
+
+
+.progress {
+  width: 29em;
+}

@@ -1,9 +1,9 @@
 import {useState, useEffect} from "react";
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
-import {db} from './firebase/firebase-config';
+import {db} from '../firebase/firebase-config';
 import "./reset.css"; //Resets styling
-import "./View Tickets/viewTickets.css";
+import "./viewTickets.css";
 
 function App() {
 
@@ -70,37 +70,57 @@ function App() {
       return;
     };
 
+    const resolvedCheck = (ticket) => {
+      console.log(ticket);
+      console.log(ticket.status);
+      if(ticket.status === "Resolved"){
+        return <b className="text-primary text-center float-lg-none">RESOLVED!</b>
+      }
+      else{
+        return <button type="button" class=" markResolved btn btn-outline-success" onClick={() =>{markResolved(ticket.id)}}>Mark as resolved</button>
+      }
+    }
+
   return (
-    <div className="App">
+    <div>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
-      <div className="container fluid">
-
-        <h1>View Tickets</h1>
-
-        <select className="" id="categories" defaultValue={"default"} onChange={(event) => {sortTickets(event.target.value);}}>
-          <option className="" value="default" disabled>Sort By</option>
-          <option value="All">All</option>
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-          <option value="Resolved">Resolved</option>
-          <option value="Unresolved">Unresolved</option>
-        </select>
+      <div className="container-fluid">
+        <div className="row">
+          <h1 className="text-secondary text-center float-lg-none">View Tickets</h1>
+        </div>
+        <hr/>
+        <div className="row">
+          <div className="col-md-4 offset-md-4">
+          <select className=" form-select form-select-md" id="categories" defaultValue={"default"} onChange={(event) => {sortTickets(event.target.value);}}>
+            <option className="" value="default" disabled>Sort By</option>
+            <option value="All">All</option>
+            <option value="Newest">Newest</option>
+            <option value="Oldest">Oldest</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Unresolved">Unresolved</option>
+          </select>
+          </div>
+          
+        </div>
+        
 
 
         {displayTickets.map((ticket) => {
           return(
-            <div class="col-sm pt-3">
-              <div class="row tickets p-3">
-                <div class="col-m-10">
-                  <p><b>Category: </b>{ticket.category}</p>
-                  <p><b>Date Created: </b> {ticket.dateCreated}</p>
-                  <p className="dateResolved"><b>Date Resolved: </b> {ticket.dateResolved}</p>
-                  <p><b>Description: </b> {ticket.description}</p>
-                  <p><b>User's Email: </b> {ticket.emailAddress}</p>
-                  <p><b>User's Phone Number: </b> {ticket.phoneNumber}</p>
-                </div>
-                <div class="col-m-2">
-                  <button type="button" class=" markResolved btn btn-outline-success" onClick={() =>{markResolved(ticket.id)}}>Mark as resolved</button>
+          <div className="row">
+              <div class="col-sm-10 offset-md-1 pt-3">
+                <div class="row tickets p-3">
+                  <div class="col-m-10">
+                    <p><b>Category: </b>{ticket.category}</p>
+                    <p><b>Date Created: </b> {ticket.dateCreated}</p>
+                    <p className="dateResolved"><b>Date Resolved: </b> {ticket.dateResolved}</p>
+                    <p><b>Description: </b> {ticket.description}</p>
+                    <p><b>User's Email: </b> {ticket.emailAddress}</p>
+                    <p><b>User's Phone Number: </b> {ticket.phoneNumber}</p>
+                  </div>
+                  <div class="col-m-2">
+                    {resolvedCheck(ticket)}
+                  </div>
                 </div>
               </div>
           </div>
