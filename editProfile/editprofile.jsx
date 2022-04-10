@@ -77,7 +77,7 @@ export default function Editprofile(){
       <form className="update">
       <div className="">
             <div className="row">
-                <div className="col-md-4 border border-4">
+                <div className="col-md-4">
                   <div>Currently logged in as: { currentUser?.email } 
                   </div>
                     <div className="d-flex flex-column align-items-center">
