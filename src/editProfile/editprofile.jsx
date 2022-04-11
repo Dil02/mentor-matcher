@@ -6,6 +6,12 @@ import "firebase/auth";
 
 export default function Editprofile(){
 
+    // const usertest = auth;
+    // console.log('big thing')
+    // console.log(usertest);
+    // console.log('useful thing!')
+    // console.log(usertest.currentUser.email);
+    // console.log('Here!')
 
     const currentUser = useAuth();
 

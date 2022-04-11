@@ -2,8 +2,9 @@ import './Selection.css';
 import {useState, useEffect} from "react";
 import {auth} from ".././firebase/firebase-config";
 import {db} from ".././firebase/firebase-config"; 
-import {getDoc, getDocs, collection, setDoc, doc, updateDoc, arrayUnion} from "firebase/firestore";
+import {getDoc, getDocs, collection, setDoc, doc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import MentorBox from './MentorBox';
+import profilePic from './profilePic.jpg';
 
 
 
@@ -37,7 +38,11 @@ function Selection() {
         const docRef = doc(db, "Mentees", auth.currentUser.email)
         const docSnap = await getDoc(docRef)
         setPending(docSnap.data().pending)
-        setMentor(docSnap.data().mentor)
+        if (docSnap.data().mentor != null) {
+          const mentorRef = doc(db, "Mentors", docSnap.data().mentor)
+          const mentorSnap = await getDoc(mentorRef)
+          setMentor(mentorSnap)
+        }
         
         setDisplayMentors(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         //In the above line we are looping through the documents in the collection 
@@ -86,8 +91,56 @@ function Selection() {
     })
     setPending(tempEmail)
   }
+
+  const cancelRequest = () => {
+    const menteeRef = doc(db, "Mentees", auth.currentUser.email);
+    const mentorRef = doc(db, "Mentors", pending);
+    updateDoc(menteeRef, {
+      pending: null
+    })
+    updateDoc(mentorRef, {
+      pending: arrayRemove(auth.currentUser.email)
+    })
+    setPending(null)
+  }
+
+  const unpair = () => {
+    const menteeRef = doc(db, "Mentees", auth.currentUser.email);
+    const mentorRef = doc(db, "Mentors", currentMentor.data().emailAddress);
+    updateDoc(menteeRef, {
+      mentor: null
+    })
+    updateDoc(mentorRef, {
+      mentees: arrayRemove(auth.currentUser.email)
+    })
+    setMentor(null)
+  }
+
+
   if (currentMentor != null) {
-    return (<h1>Paired with {currentMentor}</h1>)
+    return (
+      <div>
+        <h2>Currently paired with</h2>
+      <div class="btn w-100" id="btn-2">
+          <div id="mentors">
+          <img  src={profilePic} className="rounded-circle" height="200"/>
+          <div class="text-center">
+              <h2> {currentMentor.data().firstName + " " + currentMentor.data().surname} </h2>
+              <h4> {currentMentor.data().job} </h4>
+              <br/>
+              <p> <strong>Email: </strong></p>
+              <p class="p-0" id="email"> {currentMentor.data().emailAddress} </p>
+              <br/>
+              <p> <strong> Phone: </strong></p>
+              <p>{currentMentor.data().phone}</p>
+              <br/>
+              <p> <strong>Description: </strong></p>
+              <p>{currentMentor.data().description}</p>
+              <button onClick={unpair} class="btn btn-outline-danger">UNPAIR</button>
+          </div>
+        </div>
+      </div> 
+      </div>)
   }
   else if (pending == null) {
   return (
@@ -106,7 +159,12 @@ function Selection() {
     
     
   ) } else {
-    return(<h2>MENTOR REQUEST PENDING</h2>)
+    return(
+      <div>
+        <h2>Waiting on response from {pending}</h2>
+        <button  class="btn btn-outline-danger" onClick={cancelRequest}>CANCEL REQUEST</button>
+      </div>
+    )
   }
 }
 

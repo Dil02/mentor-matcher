@@ -44,11 +44,51 @@ function MenteeSelection() {
         pending: arrayRemove(e.target.id),
         mentees: arrayUnion(e.target.id)
       })
-    //UPDATES THE FIRESTORE BUT NOT THE STATES, PAGE NEEDS TO BE NAVIGATED TO AGAIN FOR IT TO WORK
-    //currentMentees.push(pendingMentees[pendingMentees.indexOf(e.target.id)]);
-    //setMentees(currentMentees.docs.map((doc) => ({...doc.data(), id: doc.id})));
-    //pendingMentees.splice(pendingMentees.indexOf(e.target.id), 1);
-    //setPending(pendingMentees.map((doc) => ({...doc.data(), id: doc.id})));
+
+    for (var i = 0; i < pendingMentees.length; i++) {
+      if (pendingMentees[i].emailAddress == e.target.id) {
+        break
+      }
+    }
+
+    currentMentees.push(pendingMentees[i]);
+    pendingMentees.splice(i, 1)
+  }
+
+  const denyRequest = (e) => {
+    const menteeRef = doc(db, "Mentees", e.target.id);
+    const mentorRef = doc(db, "Mentors", auth.currentUser.email);
+    updateDoc(menteeRef, {
+        pending: null,
+      })
+    updateDoc(mentorRef, {
+        pending: arrayRemove(e.target.id),
+      })
+
+    for (var i = 0; i < pendingMentees.length; i++) {
+      if (pendingMentees[i].emailAddress == e.target.id) {
+        break
+      }
+    }
+    pendingMentees.splice(i, 1)
+  }
+
+  const unpair = (e) => {
+    const menteeRef = doc(db, "Mentees", e.target.id);
+    const mentorRef = doc(db, "Mentors", auth.currentUser.email);
+    updateDoc(menteeRef, {
+        mentor: null,
+      })
+    updateDoc(mentorRef, {
+        mentees: arrayRemove(e.target.id),
+      })
+
+    for (var i = 0; i < currentMentees.length; i++) {
+      if (currentMentees[i].emailAddress == e.target.id) {
+        break
+      }
+    }
+    currentMentees.splice(i, 1)
   }
 
   return (
@@ -71,7 +111,7 @@ function MenteeSelection() {
                 </div>
                 <div className="col col-lg-2">
                   <button type="button" id={mentee.emailAddress} onClick={acceptRequest} className="btn btn-outline-success">Accept</button>
-                  <button type="button" id={mentee.emailAddress} class="btn btn-outline-danger">Decline</button>
+                  <button type="button" id={mentee.emailAddress} onClick={denyRequest} class="btn btn-outline-danger">Decline</button>
                 </div>
               </div>
           );
@@ -89,6 +129,9 @@ function MenteeSelection() {
                     <li><p>{m.emailAddress}</p></li>
                     <li><p>{m.phone}</p></li>
                   </ul>
+                </div>
+                <div className="col col-lg-2">
+                  <button type="button" id={m.emailAddress} onClick={unpair} class="btn btn-outline-danger">Unpair</button>
                 </div>
               </div>
           );

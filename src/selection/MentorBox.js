@@ -1,4 +1,4 @@
-import ProgressBar from ".././ProgressBar/ProgressBar";
+//import ProgressBar from ".././ProgressBar/ProgressBar";
 import profilePic from './profilePic.jpg';
 import {useState, useEffect} from "react";
 
@@ -27,9 +27,6 @@ function MentorBox(i, name, job, email, phone, description, toggleConfirm) {
                 <p>{description}</p>
             </div>
             <button id={email} onClick={toggleConfirm}>SEND REQUEST</button>
-            <div id="bar">
-                <ProgressBar bgcolor={color} completed="60"/>
-            </div>
           </div>
         </div>
     )
