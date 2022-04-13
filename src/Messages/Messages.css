@@ -1,0 +1,25 @@
+.messageBox{
+  border: 1px solid black;
+  width: 80%;
+  margin-left: 10%;
+  padding: 0.3em;
+  border-radius: 10px;
+  background-color: rgb(255, 233, 255);
+}
+
+.forumTitle{
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+}
+
+.textBoxChat{
+  width: 65%;
+  margin-left: 10%;
+  border-radius: 10px;
+}
+.enterBtn{
+  width: 15%;
+  border-radius: 10px;
+  background-color: rgb(255, 233, 255);
+}

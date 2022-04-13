@@ -1,0 +1,21 @@
+.description{
+  size: 5em;
+  font-size: x-large;
+  text-align: left;
+}
+
+.button{
+  font-size: small;
+  size: 50%;
+}
+
+/* Styling for image*/
+
+.avatar{
+  margin-top: 5em;
+  width: 20em;
+  height: 20em;
+  border: 15px;
+  border-color: black;
+  border-radius: 15%;
+}
