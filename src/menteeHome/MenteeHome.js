@@ -6,6 +6,14 @@ import {useAuth} from "../firebase/firebase-config";
 import { useEffect, useState } from "react";
 import { getAuth,} from "firebase/auth";
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+  
+
 function MenteeHome() {
 
     const currentUser = useAuth();
@@ -13,11 +21,11 @@ function MenteeHome() {
     const userAuth = auth.currentUser;
     const emailAddr = userAuth.email;
 
-
     const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
 
     const [users, setUsers] = useState([]);
     const usersCollectionRef = collection(firestore, "Mentees");
+
     const ref = collection(firestore, "Mentees");
 
     const db = getFirestore();
@@ -66,7 +74,7 @@ function MenteeHome() {
           <div>
           {console.log(currentUser?.email)}
 
-
+.
         <div>
             <div className='container-fluid'>
             
@@ -86,7 +94,7 @@ function MenteeHome() {
                                 <p><b>Occupation: </b>{user.occupation}</p>
                                 <p><b>Sector: </b>{user.sector}</p>
                                 <p><b>Qualification: </b>{user.Qualifications}</p>
-                                <p><b>Occupation: </b>{user.occupation}</p>
+                                <p><b>Location: </b>{user.location}</p>
                                 <hr/>
                                 <p className='text-center'><b>Keep your profile updated using the Edit Profile page</b></p>
                             </div>
@@ -99,17 +107,9 @@ function MenteeHome() {
                             <div class="col-md-12">
                                 <div className='mentorBox'> 
                                     <table>
+                                        
                                         <tr>
-                                            <th>Mentor </th>
-                                        </tr>
-                                        <tr>
-                                            <td> John Smith </td>
-                                        </tr>	
-                                        <tr>
-                                            <td> Last Seen: 10am </td>
-                                        </tr>
-                                        <tr>
-                                            <button class="button2"> Message Mentor </button>
+                                            <button class="button2"><Link to="/Messages" className="home">View Messages</Link></button>
                                         </tr>
                                     </table>
                                 </div>

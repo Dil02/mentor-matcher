@@ -2,9 +2,11 @@ import './Selection.css';
 import {useState, useEffect} from "react";
 import {auth} from ".././firebase/firebase-config";
 import {db} from ".././firebase/firebase-config"; 
-import {getDoc, getDocs, collection, setDoc, doc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
+import {getDoc, getDocs, collection, setDoc, doc, updateDoc, arrayUnion, arrayRemove, where, query} from "firebase/firestore";
 import MentorBox from './MentorBox';
 import profilePic from './profilePic.jpg';
+import Popup from './Popup'
+import { toBeEmpty } from '@testing-library/jest-dom/dist/matchers';
 
 
 
@@ -28,23 +30,60 @@ function Selection() {
   const [pending, setPending] = useState();
   const [tempEmail, setTemp] = useState();
   const [currentMentor, setMentor] = useState();
-  const mentorCol = collection(db, "Mentors");
 
   const [confirm, setConfirm] = useState(false)
   
   useEffect(() => {
     const getMentors = async () => {
-        const data = await getDocs(mentorCol);
-        const docRef = doc(db, "Mentees", auth.currentUser.email)
-        const docSnap = await getDoc(docRef)
-        setPending(docSnap.data().pending)
-        if (docSnap.data().mentor != null) {
-          const mentorRef = doc(db, "Mentors", docSnap.data().mentor)
+
+        const menteeRef = doc(db, "Mentees", auth.currentUser.email)
+        const menteeSnap = await getDoc(menteeRef)
+        setPending(menteeSnap.data().pending)
+
+        if (menteeSnap.data().mentor != null) {
+          const mentorRef = doc(db, "Mentors", menteeSnap.data().mentor)
           const mentorSnap = await getDoc(mentorRef)
           setMentor(mentorSnap)
+        } else {
+          const mentorCol = collection(db, "Mentors")
+          const mentors = await getDocs(mentorCol)
+
+          //Checks through the mentors a max of 4 times
+          //On each pass through the mentors, the matching conditions become less strict
+          let data = []
+          mentors.docs.forEach((doc) => {
+            if (doc.data().sector == menteeSnap.data().sector && doc.data().occupation == menteeSnap.data().occupation && doc.data().location == menteeSnap.data().location)
+            {
+              data.push({ ...doc.data(), id: doc.id })
+            } 
+          })
+          if (data.length < 5) {
+            mentors.docs.forEach((doc) => {
+              if (doc.data().sector == menteeSnap.data().sector && doc.data().occupation == menteeSnap.data().occupation)
+              {
+                data.push({ ...doc.data(), id: doc.id })
+              } 
+            })
+          }
+
+          if (data.length < 5) {
+            mentors.docs.forEach((doc) => {
+              if (doc.data().sector == menteeSnap.data().sector)
+              {
+                data.push({ ...doc.data(), id: doc.id })
+              } 
+            })
+          }
+
+          if (data.length < 5) {
+            mentors.docs.forEach((doc) => {
+                data.push({ ...doc.data(), id: doc.id })
+            })
+          }
+
+          setDisplayMentors(data);
+          //console.log(displayMentors)
         }
-        
-        setDisplayMentors(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         //In the above line we are looping through the documents in the collection 
         // and setting the users array to be equal to an array of the document data and id for each document.
     }
@@ -69,7 +108,7 @@ function Selection() {
       infoArray[i][1] = displayMentors[i].occupation;
       infoArray[i][2] = displayMentors[i].emailAddress;
       infoArray[i][3] = displayMentors[i].phone;
-      infoArray[i][4] = displayMentors[i].description;
+      infoArray[i][4] = displayMentors[i].personalIntroduction;
     }
     
   }
@@ -101,8 +140,10 @@ function Selection() {
     updateDoc(mentorRef, {
       pending: arrayRemove(auth.currentUser.email)
     })
+    setConfirm(false)
     setPending(null)
   }
+
 
   const unpair = () => {
     const menteeRef = doc(db, "Mentees", auth.currentUser.email);
@@ -115,7 +156,13 @@ function Selection() {
     })
     setMentor(null)
   }
-
+  /*OLD POPUP
+        <div>
+          <h2>Send a request to this mentor?</h2>
+          <button onClick={setRequest}>Confirm</button>
+          <button onClick={toggleConfirm}>Deny</button>
+        </div>
+  */
 
   if (currentMentor != null) {
     return (
@@ -135,7 +182,7 @@ function Selection() {
               <p>{currentMentor.data().phone}</p>
               <br/>
               <p> <strong>Description: </strong></p>
-              <p>{currentMentor.data().description}</p>
+              <p>{currentMentor.data().personalIntroduction}</p>
               <button onClick={unpair} class="btn btn-outline-danger">UNPAIR</button>
           </div>
         </div>
@@ -146,21 +193,19 @@ function Selection() {
   return (
     <div class="selection">
         <div class="text-center p-4">
-        {displayMentors.length == 0 ? <h2>Unfortunately you could not be matches with any mentors at this time</h2> : <h1>We have matched you with the following mentors. Please select one from below:</h1>}
+        {displayMentors.length == 0 ? <h2>Unfortunately you could not be matches with any mentors at this time</h2> : 
+        <h1>We have matched you with the following mentors. Please select one from below:</h1>}
+        <h4>(The mentors on the left best suit your personalised needs)</h4>
         </div>
-        {confirm && 
-        <div>
-          <h2>Send a request to this mentor?</h2>
-          <button onClick={setRequest}>Confirm</button>
-          <button onClick={toggleConfirm}>Deny</button>
-        </div>}
+        <Popup trigger={confirm} accept={setRequest} deny={setConfirm}>{tempEmail}</Popup>
         {displayMentors.length == 0 ? <h2></h2> : showMentors(infoArray, toggleConfirm)}
     </div>
     
     
   ) } else {
     return(
-      <div>
+      <div className="text-center">
+        <br></br>
         <h2>Waiting on response from {pending}</h2>
         <button  class="btn btn-outline-danger" onClick={cancelRequest}>CANCEL REQUEST</button>
       </div>

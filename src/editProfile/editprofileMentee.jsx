@@ -3,11 +3,29 @@ import {collection, getDocs, updateDoc, doc,query, where, getFirestore} from 'fi
 import {useAuth,auth } from "../firebase/firebase-config";
 import Profile from "./Profile";
 import "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { useHistory } from "react-router-dom";
 
 export default function Editprofile(){
 
+  const history = useHistory();
+  
+  //used 
+  const handleRoute = () =>{ 
+    history.push("./home/home");
+  }
+
+  let myEmail = "";  
 
     const currentUser = useAuth();
+
+    onAuthStateChanged(auth,(user)=>{
+      if(user){
+        console.log(user.email);
+        myEmail = user.email;
+      }
+    }
+    )
 
 
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
@@ -24,7 +42,7 @@ export default function Editprofile(){
 
     const tempFunction = async() =>{
 
-      const q=query(colRef,where("emailAddress","==", "mentee@test.com"));
+      const q=query(colRef,where("emailAddress","==", myEmail));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -43,23 +61,14 @@ export default function Editprofile(){
       getUsers();
     }, []);
 
+    const whensubmitted = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname)=>{
 
+      console.log(phone);
 
+      updateprofile(id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname);
+      handleRoute()
 
-    function GoalStrength(){
-      if(useAuth()){
-        if(auth.currentUser.email == "billy@jenkins.com"){
-          return (
-            <div className ="col-md-3"><p className="description">Goals:</p></div>
-          )
-        }
-        else{
-          return (
-            <div className ="col-md-3"><p className="description">Strengths:</p></div>
-          )
-        }
-      }
-      }
+    }
 
 
     return(
@@ -110,20 +119,20 @@ export default function Editprofile(){
                       <h4 className="text-center">Edit Profile</h4>
                     </div>
                       <div className="row mt-2">
-                        <div className="col-md-6"><input type="text" className="form-control" id= "fname"  placeholder={user.firstName}></input></div>
-                        <div className="col-md-6"><input type="text" className="form-control" id = "surname" placeholder={user.surname}></input></div>
+                        <div className="col-md-6"><input type="text" className="form-control" id= "fname"  defaultValue={user.firstName}></input></div>
+                        <div className="col-md-6"><input type="text" className="form-control" id = "surname" defaultValue={user.surname}></input></div>
                       </div>
 
                       <div className="row mt-3">
                         <div className ="col-md-3"><p className="description">Phone Number:</p></div>
-                        <div className="col-md-9"><input type="text" className="form-control"  id ="phone"placeholder={user.phone}></input></div>
+                        <div className="col-md-9"><input type="tel" className="form-control" maxlength="10" id ="phone" defaultValue={user.phone}></input></div>
                       </div>
 
 
                       <div className="row mt-4">
                         <div class="form-group">
                         <div>personal Introduction</div>
-                        <div><input type="text" className="form-control" id = "personalIntroduction" placeholder={user.personalIntroduction}></input></div>
+                        <div><input type="text" className="form-control" id = "personalIntroduction" defaultValue={user.personalIntroduction}></input></div>
                         </div>
                       </div>
                         
@@ -134,12 +143,12 @@ export default function Editprofile(){
 
                       <div className="row mt-4">
                         <div className ="col-md-3"><p className="description">Occupation:</p></div>
-                        <div className="col-md-9"><input type="text" className="form-control" id = "occupation"  placeholder={user.occupation}></input></div>
+                        <div className="col-md-9"><input type="text" className="form-control" id = "occupation" defaultValue={user.occupation}></input></div>
                       </div>
 
                       <div className="row mt-4">
                       <div className ="col-md-3"><p className="description">Sector:</p></div>
-                        <select class="col-md-9 form-select form-select-sm" id ="sector" name = "sector" aria-label=".form-select-sm example">
+                        <select class="col-md-9 form-select form-select-sm" id ="sector" name = "sector" defaultValue={user.sector} aria-label=".form-select-sm example">
                           <option disabled selected>Open this select menu</option>
                           <option value="technology">Technology</option>
                           <option value="marketing">Marketing</option>
@@ -151,7 +160,7 @@ export default function Editprofile(){
 
                       <div className="row mt-4">
                       <div className ="col-md-3"><p className="description">Qualifications:</p></div>
-                        <select class="col-md-9 form-select form-select-sm" id ="Qualifications" name="Qualifications" aria-label=".form-select-sm example">
+                        <select class="col-md-9 form-select form-select-sm" id ="Qualifications" defaultValue={user.Qualifications} name="Qualifications" aria-label=".form-select-sm example">
                           <option disabled selected>Open this select menu</option>
                           <option value="BSc">BSc</option>
                           <option value="MSc">MSc</option>
@@ -159,11 +168,10 @@ export default function Editprofile(){
                           <option value="Other">Other</option>
                         </select>
                       </div>
-                          Upto qualifications, everything is common for Mentor & Mentee
+
                           <br/>
-                          Entries for Mentees
                       <div className="row mt-4">
-                        <GoalStrength/>
+                        <div className ="col-md-3"><p className="description">Goals:</p></div>
                         <div className="col-md-9">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" id="presentationSkills" />
@@ -201,17 +209,10 @@ export default function Editprofile(){
                             Coding
                           </label>
                         </div>
-
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="storytellingMentee" />
-                          <label class="form-check-label" for="storytellingMentee">
-                            Storytelling
-                          </label>
-                        </div>
                         </div>
                       </div>
                       
-                      <div className="mt-5 text-right"><button className="btn btn-primary profile-button " onClick={() =>{updateprofile(currentUser?.email,document.getElementById('personalIntroduction').value,document.getElementById('Qualifications').value,document.getElementById('sector').value,document.getElementById("location").value,document.getElementById("phone").value,document.getElementById("presentationSkills").checked,document.getElementById("designThinking").checked,document.getElementById("leadershipSkills").checked,document.getElementById("verbalCommunications").checked,document.getElementById("careerProgression").checked,document.getElementById("coding").checked, document.getElementById("occupation").value,document.getElementById("fname").value, document.getElementById("surname").value)}} type="submit">Save Changes</button></div>
+                      <div className="mt-5 text-right"><button className="btn btn-primary profile-button " onClick={() =>{whensubmitted(currentUser?.email,document.getElementById('personalIntroduction').value,document.getElementById('Qualifications').value,document.getElementById('sector').value,document.getElementById("location").value,document.getElementById("phone").value,document.getElementById("presentationSkills").checked,document.getElementById("designThinking").checked,document.getElementById("leadershipSkills").checked,document.getElementById("verbalCommunications").checked,document.getElementById("careerProgression").checked,document.getElementById("coding").checked, document.getElementById("occupation").value,document.getElementById("fname").value, document.getElementById("surname").value)}} type="submit">Save Changes</button></div>
                   </div>
                 </div>
             </div>
@@ -229,4 +230,3 @@ export default function Editprofile(){
 
     )
 }
-

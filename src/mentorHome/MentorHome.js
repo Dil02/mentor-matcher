@@ -7,7 +7,13 @@ import {useAuth} from "../firebase/firebase-config";
 import { useEffect, useState } from "react";
 import { getAuth,} from "firebase/auth";
 
-
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+  
 
 function MentorHome() {
 
@@ -73,7 +79,7 @@ function MentorHome() {
                                     <p><b>Occupation: </b>{user.occupation}</p>
                                     <p><b>Sector: </b>{user.sector}</p>
                                     <p><b>Qualification: </b>{user.Qualifications}</p>
-                                    <p><b>Occupation: </b>{user.occupation}</p>
+                                    <p><b>Location: </b>{user.location}</p>
                                     <hr/>
                                     <p className='text-center'><b>Keep your profile updated using the Edit Profile page</b></p>
                                 </div>
@@ -85,23 +91,8 @@ function MentorHome() {
                                 <div className='col-md-12'>
                                     <div className='menteeBox'>
                                     <table>
-                                        <tr>
-                                            <th>Mentees </th>
-                                        </tr>
-                                        <tr>
-                                            <td> Mentee1: <button class="button2"> Message </button> </td>
-                                        </tr>	
-                                        <tr>
-                                            <td> Mentee2: <button class="button2"> Message </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Mentee3: <button class="button2"> Message </button> </td>
-                                        </tr>
-                                        <tr> 
-                                            <td> Mentee4: <button class="button2"> Message </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Mentee5: <button class="button2"> Message </button> </td>
+                                    <tr>
+                                            <button class="button2"><Link to="/MessagesMentors" className="home">View Messages</Link></button>
                                         </tr>
                                     </table>
 
