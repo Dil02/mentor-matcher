@@ -1,3 +1,4 @@
+// importing libraries and dependencies
 import React,{ useState,useEffect} from "react";
 import {collection, getDocs, updateDoc, doc,query, where, getFirestore} from 'firebase/firestore';
 import {useAuth,auth } from "../firebase/firebase-config";
@@ -7,10 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useHistory } from "react-router-dom";
 
 export default function Editprofile(){
-
   const history = useHistory();
-  
-  //used 
   const handleRoute = () =>{ 
     history.push("./home/home");
   }
@@ -27,7 +25,12 @@ export default function Editprofile(){
     }
     )
 
-
+  /*
+  | Updates the document in firebase using the information entered in the form
+  |
+  | @params     form-fields
+  |
+  */
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
       const profiledoc = doc(db, "Mentors",id);
       const newFields = {Qualifications:Qualifications,personalIntroduction:personalIntroduction,sector:sector,firstName: profilefname,presentationskills:presentationskills, surname:surname, location:location,occupation:occupation,designThinking:designThinking,leadershipSkills,leadershipSkills,verbalCommunications:verbalCommunications,careerProgression:careerProgression,coding:coding,phone:phone};
@@ -40,13 +43,16 @@ export default function Editprofile(){
     const colRef = (collection(db, "Mentors"));
     const newArray=[]
 
+  /*
+  | Gets the current user's information from firebase firestore database
+  |
+  */
     const tempFunction = async() =>{
 
       const q=query(colRef,where("emailAddress","==", myEmail));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        //doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
         newArray.push(doc.data());
       }); console.log(newArray); setUsers(newArray)
@@ -61,16 +67,18 @@ export default function Editprofile(){
       getUsers();
     }, []);
 
-    const whensubmitted = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname)=>{
 
-      console.log(phone);
+    const whensubmitted = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname)=>{
 
       updateprofile(id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname);
       handleRoute()
 
     }
 
-
+  /*
+  | Renders the edit profile page
+  |
+  */
     return(
 
       <div>

@@ -1,6 +1,5 @@
+// importing stylings and dependencies
 import './mentorHome.css';
-
-
 import {firestore} from  "../firebase/firebase-config";
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore,query, where, onSnapshot, getFirestore} from "@firebase/firestore";
 import {useAuth} from "../firebase/firebase-config";
@@ -33,6 +32,11 @@ function MentorHome() {
 
     const newArray=[]
 
+    
+  /*
+  | Gets the current user's information from firebase firestore database
+  |
+  */
     const tempFunction = async() =>{
 
         const q=query(colRef,where("emailAddress","==", emailAddr));
@@ -58,6 +62,7 @@ function MentorHome() {
         }
       }, [currentUser])   
 
+      // returns the html page for mentee home page along with mapping for the user's details
   return (
 <div>
 {users.map((user) => {
@@ -92,7 +97,7 @@ function MentorHome() {
                                     <div className='menteeBox'>
                                     <table>
                                     <tr>
-                                            <button class="button2"><Link to="/MessagesMentors" className="home">View Messages</Link></button>
+                                            <button class="button2"><Link to="/MessagesMentors" style={{color: "black"}}>Go to Mentor Matcher Forum</Link></button>
                                         </tr>
                                     </table>
 
@@ -101,7 +106,6 @@ function MentorHome() {
                             </div>
                             <div className='row'>
                                 <div className='col-md-12'>
-                                {/* stylings of meetingsBox in menteeHome.css */}
                                     <div className='meetingsBox'>
                                     <table>
                                         <tr>
@@ -111,16 +115,10 @@ function MentorHome() {
                                             <td> Mentee1: 9am <button class="button2"> Join Meeting </button> </td>
                                         </tr>	
                                         <tr>
-                                            <td> Mentee2: 10:30am <button class="button2"> Join Meeting </button> </td>
+                                            <td> Mentee2: 2pm <button class="button2"> Join Meeting </button> </td>
                                         </tr>
                                         <tr>
-                                            <td> Mentee3: 11:30am <button class="button2"> Join Meeting </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Mentee4: 2pm <button class="button2"> Join Meeting </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Mentee5: 4pm <button class="button2"> Join Meeting </button> </td>
+                                            <td> Mentee3: 4pm <button class="button2"> Join Meeting </button> </td>
                                         </tr>
                                     </table>
                                     </div>

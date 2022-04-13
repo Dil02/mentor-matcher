@@ -1,4 +1,4 @@
-//import ProgressBar from ".././ProgressBar/ProgressBar";
+// importing libraries and dependencies
 import profilePic from './profilePic.jpg';
 import {useState, useEffect} from "react";
 
@@ -9,6 +9,7 @@ function MentorBox(i, name, job, email, phone, description, toggleConfirm) {
     var color = "#7a3fc2"
     if (i == 2) { color = '#42b0cc'} 
     
+    // returns individual profile boxes for selection page
     return(
         <div class="btn w-100" id={"btn-" + i}>
             <div id="mentors">

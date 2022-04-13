@@ -1,19 +1,15 @@
-//import React from 'react';
+// importing dependencies and stylings
 import React, {useState} from "react";
 import './Messages.css';
-
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import {collection, getFirestore} from 'firebase/firestore'
-
-
-
 import { useAuthState} from 'react-firebase-hooks/auth';
 import { useCollectionData} from 'react-firebase-hooks/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
+// initializing the firebase api
 firebase.initializeApp({
   apiKey: "AIzaSyBDFQX8ZI5dzA2NAnXj752bcVaoRl6I_Kk",
   authDomain: "mentor-matcher-g14.firebaseapp.com",
@@ -40,20 +36,12 @@ function Messages() {
   const [user] = useAuthState(auth);
 
   const [users, setUsers] = useState([]);
-  // const usersCollectionRef = collection(firestore, "Mentees");
-  // const ref = collection(firestore, "Mentees");
 
   const db = getFirestore();
-  const colRef = (collection(db, "Mentees"));
+  const colRef = (collection(db, "Mentors"));
 
 
-  // const [users2, setUsers2] = useState([]);
-  // const usersCollectionRef2 = collection(firestore, "Mentors");
-  // const ref2 = collection(firestore, "Mentors");
-
-  // const db2 = getFirestore();
-  // const colRef2 = (collection(db, "Mentors"));
-
+// returning the chatroom based on the login status of user
   return (
     <div>
     
@@ -77,7 +65,12 @@ export function ChatRoom(){
   const[messages] = useCollectionData(query, {idField: 'id'});
   const[formValue, setFromValue] = useState('');
   
-
+  /*
+  | Sends message to the firestore database
+  |
+  | @param  event  e
+  |
+  */
   const sendMessage = async(e) => {
 
     e.preventDefault();
@@ -97,7 +90,7 @@ export function ChatRoom(){
     setFromValue('');
 
   }
-
+  // returns the main part of the chatroom
   return (
     <>
     <div className="forumTitle">
@@ -124,7 +117,7 @@ function ChatMessage(props){
 
   const messageClass = uid === auth.currentUser.uid? 'sent' : 'received';
 
-
+// returns the messages of each user
   return (
     <div className = {`message ${messageClass}}`}>
       

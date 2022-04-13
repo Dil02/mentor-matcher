@@ -1,3 +1,4 @@
+// importing libraries and dependencies
 import React,{ useState,useEffect} from "react";
 import {collection, getDocs, updateDoc, doc,query, where, getFirestore} from 'firebase/firestore';
 import {useAuth,auth } from "../firebase/firebase-config";
@@ -27,7 +28,12 @@ export default function Editprofile(){
     }
     )
 
-
+  /*
+  | Updates the document in firebase using the information entered in the form
+  |
+  | @params     form-fields
+  |
+  */
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
       const profiledoc = doc(db, "Mentees",id);
       const newFields = {Qualifications:Qualifications,personalIntroduction:personalIntroduction,sector:sector,firstName: profilefname,presentationskills:presentationskills, surname:surname, location:location,occupation:occupation,designThinking:designThinking,leadershipSkills,leadershipSkills,verbalCommunications:verbalCommunications,careerProgression:careerProgression,coding:coding,phone:phone};
@@ -40,13 +46,16 @@ export default function Editprofile(){
     const colRef = (collection(db, "Mentees"));
     const newArray=[]
 
+      /*
+  | Gets the current user's information from firebase firestore database
+  |
+  */
     const tempFunction = async() =>{
 
       const q=query(colRef,where("emailAddress","==", myEmail));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        //doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
         newArray.push(doc.data());
       }); console.log(newArray); setUsers(newArray)
@@ -70,7 +79,10 @@ export default function Editprofile(){
 
     }
 
-
+  /*
+  | Renders the edit profile page
+  |
+  */
     return(
 
       <div>

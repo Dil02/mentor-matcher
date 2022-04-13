@@ -1,3 +1,4 @@
+// importing libraries and dependencies
 import {useState, useEffect} from "react";
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
@@ -70,6 +71,12 @@ function App() {
       return;
     };
 
+    /* 
+    | checks if resolved, and if not resolved, it shows a button to resolve the ticket
+    |
+    | @param  Object  ticket
+    | @return html  
+    */
     const resolvedCheck = (ticket) => {
       console.log(ticket);
       console.log(ticket.status);
@@ -81,6 +88,7 @@ function App() {
       }
     }
 
+    // returns the html output for the view tickets page
   return (
     <div>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>

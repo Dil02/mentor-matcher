@@ -1,8 +1,4 @@
-// import './registration.css';
-// import logo from './logo.png';
-// import blankprofile from './profilePic.jpg';
-// import imageview from './imageview';
-// import Profile from './Profile'
+// importing libraries and components
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,21 +6,16 @@ import {
     Link
   } from "react-router-dom";
 
-// importing libraries
-// import { useState } from 'react';
-// import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
-// import {auth} from "../firebase/firebase-config";
-// import { FirebaseError } from 'firebase/app';
-// import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
-// import {db} from '../firebase/firebase-config';
-
 import ViewTickets from '../ViewTickets/viewTickets'
-
 import Pairings from './Pairings'
 
+  /*
+  | Renders the home page for the system administrator 
+  |
+  | 
+  */
 function AdminHome() {
-
-    
+  
   return (
     <div >
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>

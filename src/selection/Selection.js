@@ -1,3 +1,4 @@
+// importing dependencies and libraries and stylesheets
 import './Selection.css';
 import {useState, useEffect} from "react";
 import {auth} from ".././firebase/firebase-config";
@@ -9,7 +10,10 @@ import Popup from './Popup'
 import { toBeEmpty } from '@testing-library/jest-dom/dist/matchers';
 
 
-
+/* 
+| Shows mentors in the html output into different Mentor Boxes
+|
+ */
 function showMentors(infoArray, toggleConfirm) {
   return(
     <div  class="btn-group d-flex" role="group">
@@ -21,7 +25,6 @@ function showMentors(infoArray, toggleConfirm) {
     </div>
   )
 }
-
 
 
 function Selection() {
@@ -82,14 +85,12 @@ function Selection() {
           }
 
           setDisplayMentors(data);
-          //console.log(displayMentors)
         }
         //In the above line we are looping through the documents in the collection 
         // and setting the users array to be equal to an array of the document data and id for each document.
     }
     getMentors();
   }, []);
-
 
   var infoArray = [["none", "none", "none", "none", "none"], 
                   ["none", "none", "none", "none", "none"], 
@@ -156,14 +157,8 @@ function Selection() {
     })
     setMentor(null)
   }
-  /*OLD POPUP
-        <div>
-          <h2>Send a request to this mentor?</h2>
-          <button onClick={setRequest}>Confirm</button>
-          <button onClick={toggleConfirm}>Deny</button>
-        </div>
-  */
 
+// returns the mentees that mentors are paired with 
   if (currentMentor != null) {
     return (
       <div>

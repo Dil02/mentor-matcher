@@ -1,3 +1,4 @@
+// importing dependencies and stylesheets
 import { useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
@@ -41,6 +42,7 @@ function App() {
       // Network issues and pairings are considered less urgent.
     }
 
+    // adds the ticket to the database 
     await addDoc(usersCollectionRef,
        {category: newCategory, 
         description: newDescription,
@@ -53,6 +55,7 @@ function App() {
       });
   }
 
+  // form validation
   const validateForm = () => {
   
     if(document.getElementById("categories").value=="default")
@@ -72,6 +75,7 @@ function App() {
 
   }
 
+  // returns the html of the raise tickets page
   return (
     
     <div className="App">

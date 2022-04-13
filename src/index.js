@@ -1,3 +1,37 @@
+/*
+* ECS506U - SOFTWARE ENGINEERING PROJECT
+* FDM Mentor Matcher
+*
+*
+* Developed in:
+* node    v16.14.0
+* npm     v8.3.1
+* VSCode  v1.65.1
+*
+* Contributors for this project: 
+*
+* Abdullah Al Asif    200794417   ec20829@qmul.ac.uk
+* Antonita Nimalan    200272199   ec20351@qmul.ac.uk
+* Bilal Ali Ahmed     200296623   ec20907@qmul.ac.uk
+* Dilkush Pemji Punja 200180377   ec20293@qmul.ac.uk
+* Jamal Haruna        200503130   ec20548@qmul.ac.uk
+* Lily Rose Michael   200452573   ah20246@qmul.ac.uk
+*
+* Technologies used: React, Bootstrap, Firebase, HTML, CSS, Javascript
+* 
+*/
+
+  /*
+  | one sentnce 
+  |
+  | how it does
+  | 
+  |
+  | @param  JSON    weather
+  |
+  | @return String
+  */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -37,6 +71,12 @@ import MessagesMentors from './Messages/MessagesMentor';
 // importing images
 import FDMLogo from './logo.png';
 
+  /*
+  | Logouts the user and redirects to the home page
+  |
+  | @param  event    e
+  |
+  */
 const logout = async (e) => {
   e.preventDefault();
   try{
@@ -54,6 +94,7 @@ onAuthStateChanged(auth, (user) => {
   console.log('Login status change:', user)
 })
 
+
 function Homepagelogin() {
   const isLoggedIn = useAuth()
   return (
@@ -68,19 +109,12 @@ function HomePage() {
   )
 }
 
-/*async function checkMentors(db) {
-  const mentorsCol = collection(db, 'Mentors');
-  const mentorSnapshot = await getDocs(mentorsCol);
-  const mentorList = mentorSnapshot.docs.map(doc => doc.data());
-  for(var i = 0; i<mentorList.length; i++) {
-    if (mentorList[i].emailAddress == auth.currentUser.email) {
-      return true
-    }
-  }
-  return false;
-}*/
 
 
+  /*
+  | Checks the email of the user and gives them the homepage pased on that
+  | 
+  */
 function MenteeOrMentor() {
   //let docRef = doc(db, "Mentors", auth.currentUser.email)
   if (auth.currentUser.email == "billy@jenkins.com" |
@@ -95,7 +129,11 @@ function MenteeOrMentor() {
   }
 }
 
-
+  /*
+  | Returns navbar based on the type of user
+  |
+  | @return HTML
+  */
 function NavBar() {
   if (!useAuth()) {
     return(
@@ -153,7 +191,10 @@ function NavBar() {
 }
 
 
-
+  /*
+  | Main render section which also has the routing to the pages
+  |
+  */
 ReactDOM.render(
   <React.StrictMode>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>

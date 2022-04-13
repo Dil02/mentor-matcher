@@ -1,3 +1,4 @@
+// importing dependencies
 import './registration.css';
 import logo from './logo.png';
 import blankprofile from './profilePic.jpg';
@@ -35,6 +36,12 @@ function Registration() {
       setUser(currentUser)
     })
 
+    /* 
+    |   checks the phone number and compares with a pattern, and returns true if it satisfies the condition
+    |
+    |   @param     String   phoneNo
+    |   @return    boolean
+    */
     function phoneNumberCheck(phoneNo){
         var phoneNoFormat = /^\d{10}$/;
         if((phoneNo.match(phoneNoFormat)))
@@ -94,7 +101,6 @@ function Registration() {
             
                   console.log(user);
                   window.alert("Registration complete!");
-                //   window.location.href = "/Login";
                 } 
                 catch(error)
                 {
@@ -114,8 +120,7 @@ function Registration() {
           }
         };
       
-  
-    
+  // returns the main screen of the registration page
   return (
     <div >
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>

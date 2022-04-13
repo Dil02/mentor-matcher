@@ -1,3 +1,4 @@
+//.importing dependencies
 import { initializeApp } from "firebase/app";
 import { getFirestore } from '@firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";

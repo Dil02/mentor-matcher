@@ -1,5 +1,5 @@
+// importing images and stylesheets
 import './Home.css';
-//Images 
 import fb_logo from './fb_logo.png';
 import fdm_logo from './fdm_logo.png';
 import fdm_gif from './fdmlogo.gif';
@@ -7,6 +7,7 @@ import insta_logo from './insta_logo.png';
 import logo from './logo.png';
 import pic1 from './pic1.png';
 
+// returns the html for default home page
 function Home() {
     return (
         <div class="bg-info">

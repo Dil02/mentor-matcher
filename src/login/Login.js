@@ -1,4 +1,4 @@
-//import './Login.css';
+// importing dependencies
 import { useState } from 'react';
 import {  onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
 import {auth} from ".././firebase/firebase-config";
@@ -24,7 +24,11 @@ function Login() {
         setUser(currentUser)
       })
 
-      
+ /*
+  | logs the user in with the given credentials
+  |
+  | @param event e
+  */
     const login = async (e) => {
         e.preventDefault();
         try{
@@ -39,7 +43,7 @@ function Login() {
           }
       };
     
-    
+    // returning the html for login page
     return (
 <div>
 .      

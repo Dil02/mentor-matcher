@@ -1,5 +1,5 @@
+// importing stylings and dependencies
 import './menteeHome.css';
-
 import {firestore} from  "../firebase/firebase-config";
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore,query, where, onSnapshot, getFirestore} from "@firebase/firestore";
 import {useAuth} from "../firebase/firebase-config";
@@ -33,6 +33,10 @@ function MenteeHome() {
 
     const newArray=[]
 
+  /*
+  | Gets the current user's information from firebase firestore database
+  |
+  */
     const tempFunction = async() =>{
 
         const q=query(colRef,where("emailAddress","==", emailAddr));
@@ -59,13 +63,7 @@ function MenteeHome() {
         }
       }, [currentUser])
 
-
-    // const checkData = (user) => {
-    //     if(user.location == 0){
-    //         return <p>Your profile details is not set, please add them in Edit Profile page</p>
-    //     }
-    // }
-
+// returns the html page for mentee home page along with mapping for the user's details
   return (
 
     <div>
@@ -109,7 +107,7 @@ function MenteeHome() {
                                     <table>
                                         
                                         <tr>
-                                            <button class="button2"><Link to="/Messages" className="home">View Messages</Link></button>
+                                            <button class="button2"><Link to="/Messages" style={{color: "black"}} className="">Go to Mentor Matcher Forum</Link></button>
                                         </tr>
                                     </table>
                                 </div>

@@ -1,3 +1,4 @@
+// importing dependencies and stylings
 import {useState, useEffect} from "react";
 import { FirebaseError } from 'firebase/app';
 import {collection, getDoc, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore, where, query, arrayRemove, arrayUnion} from 'firebase/firestore';
@@ -33,6 +34,7 @@ function MenteeSelection() {
     getMentees();
   });
 
+  // Accepts the request from the mentee
   const acceptRequest = (e) => {
     const menteeRef = doc(db, "Mentees", e.target.id);
     const mentorRef = doc(db, "Mentors", auth.currentUser.email);
@@ -55,6 +57,7 @@ function MenteeSelection() {
     pendingMentees.splice(i, 1)
   }
 
+  // denying requests from mentees
   const denyRequest = (e) => {
     const menteeRef = doc(db, "Mentees", e.target.id);
     const mentorRef = doc(db, "Mentors", auth.currentUser.email);
@@ -73,6 +76,7 @@ function MenteeSelection() {
     pendingMentees.splice(i, 1)
   }
 
+  // Unpairing existing mentor-mentee match/relationship
   const unpair = (e) => {
     const menteeRef = doc(db, "Mentees", e.target.id);
     const mentorRef = doc(db, "Mentors", auth.currentUser.email);
@@ -91,6 +95,7 @@ function MenteeSelection() {
     currentMentees.splice(i, 1)
   }
 
+  // returns the html output 
   return (
     <div className="App">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
@@ -100,7 +105,7 @@ function MenteeSelection() {
           return(
               <div className="row menteeProfiles p-3 mt-4">
                 <div className="col-md-2">
-                  <img className="profilePhoto" src=""></img>
+                  <img className="profilePhoto" src="https://firebasestorage.googleapis.com/v0/b/mentor-matcher-g14.appspot.com/o/profilePictures%2Fmentee%40mentee.com.jpg?alt=media&token=31e1d6a4-3a0d-4b84-99c0-7b7da247f9e0"></img>
                 </div>
                 <div className="col-lg-7">
                   <ul className="list-unstyled">
@@ -121,7 +126,7 @@ function MenteeSelection() {
           return(
               <div className="row menteeProfiles p-3 mt-4">
                 <div className="col-md-2">
-                  <img className="profilePhoto" src=""></img>
+                  <img className="profilePhoto" src="https://firebasestorage.googleapis.com/v0/b/mentor-matcher-g14.appspot.com/o/profilePictures%2Fmentee%40mentee.com.jpg?alt=media&token=31e1d6a4-3a0d-4b84-99c0-7b7da247f9e0"></img>
                 </div>
                 <div className="col-lg-7">
                   <ul className="list-unstyled">
