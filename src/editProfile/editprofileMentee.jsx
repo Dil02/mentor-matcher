@@ -1,23 +1,25 @@
 import React,{ useState,useEffect} from "react";
 import {collection, getDocs, updateDoc, doc,query, where, getFirestore} from 'firebase/firestore';
-import {useAuth,auth } from "../firebase/firebase-config";
+import {useAuth, auth } from "../firebase/firebase-config";
 import Profile from "./Profile";
-import "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Editprofile(){
 
-    // const usertest = auth;
-    // console.log('big thing')
-    // console.log(usertest);
-    // console.log('useful thing!')
-    // console.log(usertest.currentUser.email);
-    // console.log('Here!')
-
+    let myEmailAddress="";
     const currentUser = useAuth();
 
+    //New Changes:
+    onAuthStateChanged(auth, (user) => {
+      if(user){
+        console.log("Current user's email address is: " + user.email);
+        myEmailAddress=user.email;
+      }
+    })
+    //New Changes above.
 
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
-      const profiledoc = doc(db, "Mentors",id);
+      const profiledoc = doc(db, "Mentees",id);
       const newFields = {Qualifications:Qualifications,personalIntroduction:personalIntroduction,sector:sector,firstName: profilefname,presentationskills:presentationskills, surname:surname, location:location,occupation:occupation,designThinking:designThinking,leadershipSkills,leadershipSkills,verbalCommunications:verbalCommunications,careerProgression:careerProgression,coding:coding,phone:phone};
       await updateDoc(profiledoc,newFields);
       
@@ -25,12 +27,12 @@ export default function Editprofile(){
 
     const [users, setUsers] = useState([]);
     const db = getFirestore();
-    const colRef = (collection(db, "Mentors"));
+    const colRef = (collection(db, "Mentees"));
     const newArray=[]
 
     const tempFunction = async() =>{
 
-      const q=query(colRef,where("emailAddress","==", "asif12@gmail.com"));
+      const q=query(colRef,where("emailAddress","==", myEmailAddress));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {

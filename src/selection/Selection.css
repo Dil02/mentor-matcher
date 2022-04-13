@@ -1,28 +1,67 @@
-.btn-1 {
+#btn-1 {
   background-color: #d8bdff;
-  height: 49em;
+  height: 45rem;
 }
 
-.btn-2 {
+#btn-2 {
   background-color: #bdffff;
-  height: 49em;
+  height: 45rem;
 }
 
-.bar {
+#bar {
 position: absolute;
-bottom: 0px;
-left: 0px;
-}
-
-.bar1 {
-background-color: #7a3fc2;
-}
-
-.bar2 {
-background-color: #42b0cc;
+bottom: -10px;
+left: 9px;
+height: 4em;
 }
 
 
-.progress {
-  width: 29em;
+.selection {
+  padding-top: 4em;
+}
+
+#mentors {
+  background-color: transparent;
+  border: none;
+}
+
+
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+}
+
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+.modal-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
 }

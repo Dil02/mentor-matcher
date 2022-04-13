@@ -1,23 +1,29 @@
 import { useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, setDoc, Firestore} from 'firebase/firestore';
-import { getAuth} from "firebase/auth";
 import {db} from '../firebase/firebase-config';
 import "./raiseTickets.css";
 import "./reset.css"; //Resets styling
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {useAuth, auth } from "../firebase/firebase-config";
 
 //Bootstrap Imports:
 import {Container, Row, Col, Button, NavbarBrand, NavLink} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+let myEmailAddress="";
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    console.log("Current user's email address is: " + user.email);
+    myEmailAddress=user.email;
+  }
+})
 
 function App() {
-
-  const auth= getAuth();
-  const userAuth = auth.currentUser;
-
   const [newCategory, setCategory] = useState("");
   const [newDescription, setDescription] = useState("");
+
+  const [users, setUsers] = useState([]);
 
   const usersCollectionRef=collection(db, "Tickets");
 
@@ -40,8 +46,8 @@ function App() {
         description: newDescription,
         dateCreated: String(new Date()),
         dateResolved : "N/A",
-        emailAddress : userAuth.email,
-        phoneNumber : "N/A",
+        emailAddress : myEmailAddress,
+        phoneNumber : "Add this",
         status : "Unresolved",
         urgent : isUrgent
       });

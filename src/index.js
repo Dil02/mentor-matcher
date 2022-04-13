@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './editProfile/mystyle.css'
+import './editProfile/mystyle.css';
 import reportWebVitals from './reportWebVitals';
 import logo from './logo.png';
 import {auth, useAuth, db} from './firebase/firebase-config'
 import {  onAuthStateChanged, signOut} from 'firebase/auth';
 import { collection, getDocs, query, where, onSnapshot, doc, getDoc } from '@firebase/firestore';
 import { async } from '@firebase/util';
+
+
 
 import {
   BrowserRouter as Router,
@@ -24,12 +26,14 @@ import Registration from './registration/Registration';
 import MenteeHome from './menteeHome/MenteeHome';
 import AdminHome from './adminHome/AdminHome';
 import Editprofile from './editProfile/editprofile';
+import EditprofileMentee from './editProfile/editprofileMentee';
 import RaiseTickets from './RaiseTickets/raiseTickets';
 import ViewTickets from './ViewTickets/viewTickets'
 import MentorHome from './mentorHome/MentorHome';
+import MenteeSelection from './MenteeSelection/MenteeSelection';
 
-
-
+// importing images
+import FDMLogo from './logo.png';
 
 const logout = async (e) => {
   e.preventDefault();
@@ -40,6 +44,7 @@ const logout = async (e) => {
       alert("Invalid Login Details");
       console.log(error.message);
     }
+    window.location.href = "/Home"
 
 };
 
@@ -76,7 +81,9 @@ function HomePage() {
 
 function MenteeOrMentor() {
   //let docRef = doc(db, "Mentors", auth.currentUser.email)
-  if (auth.currentUser.email == "billy@jenkins.com")
+  if (auth.currentUser.email == "billy@jenkins.com" |
+  auth.currentUser.email == "mentor@test.com" 
+  )
   {
     return(<MentorHome />)
   } else if (auth.currentUser.email == "admin@gmail.com") {
@@ -97,7 +104,10 @@ function NavBar() {
         <li><a href="/Home#faqs" class="faqs">FAQS</a></li>
         <li><Link to="/Registration" className="register">REGISTER</Link></li>
         <li class="login"><Link to="/Login" class="login">LOGIN</Link></li>
-      </nav> )
+      </nav> 
+      )
+
+      
   } 
   else {
     // admin
@@ -108,19 +118,20 @@ function NavBar() {
           <li><Link to="/Home" class="home">HOME</Link></li>
           {/* <li><a href="home.html#contact" class="contact">VIEW MENTEES</a></li> */}
           <li><Link to="/ViewTickets" className="home">VIEW TICKETS</Link></li>
-          <li class="login"><button onClick={logout}>LOGOUT</button></li>
+          <li class="login"><button className='logoutButton' onClick={logout}>LOGOUT</button></li>
         </nav> )
     }
     // mentor
-    else if (auth.currentUser.email == "billy@jenkins.com") {
+    else if (auth.currentUser.email == "billy@jenkins.com" |
+    auth.currentUser.email == "mentor@test.com") {
       return (
         <nav id="navbar">
           <li><Link to="/Home"><img src={logo} alt="logo" class= "fdmlogo"/></Link></li>
           <li><Link to="/Home" class="home">HOME</Link></li>
           <li><Link to="/Editprofile" className="home">EDIT PROFILE</Link></li>
           <li><Link to="/RaiseTickets" className="home">RAISE TICKET</Link></li>
-          <li><a href="home.html#contact" class="contact">VIEW MENTEES</a></li>
-          <li class="login"><button onClick={logout}>LOGOUT</button></li>
+          <li><Link to="/MenteeSelection" class="contact">VIEW MENTEES</Link></li>
+          <li class="login"><button className='logoutButton' onClick={logout}>LOGOUT</button></li>
         </nav> )
     } 
     // mentee
@@ -129,10 +140,10 @@ function NavBar() {
         <nav id="navbar">
           <li><Link to="/Home"><img src={logo} alt="logo" class= "fdmlogo"/></Link></li>
           <li><Link to="/Home" class="home">HOME</Link></li>
-          <li><Link to="/Editprofile" className="home">EDIT PROFILE</Link></li>
+          <li><Link to="/EditprofileMentee" className="home">EDIT PROFILE</Link></li>
           <li><Link to="/RaiseTickets" className="home">RAISE TICKET</Link></li>
           <li><Link to="/Selection" class="contact">MENTOR</Link></li>
-          <li class="login"><button onClick={logout}>LOGOUT</button></li>
+          <li class="login"><button className='logoutButton' onClick={logout}>LOGOUT</button></li>
         </nav> )
     }
     
@@ -148,6 +159,9 @@ ReactDOM.render(
       <Router>
         <NavBar/>
         <Switch>
+          {/* <Route path="/">
+            <HomePage />
+          </Route> */}
           <Route path="/Selection">
             <Selection />
           </Route>
@@ -162,6 +176,9 @@ ReactDOM.render(
           </Route>
           <Route path="/Editprofile">
             <Editprofile />
+          </Route>
+          <Route path="/EditprofileMentee">
+            <EditprofileMentee />
           </Route>
           <Route path="/AdminHome">
             <AdminHome />

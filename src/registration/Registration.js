@@ -34,6 +34,19 @@ function Registration() {
     onAuthStateChanged(auth,(currentUser) => {
       setUser(currentUser)
     })
+
+    function phoneNumberCheck(phoneNo){
+        var phoneNoFormat = /^\d{10}$/;
+        if((phoneNo.match(phoneNoFormat)))
+        {
+            return true;
+        }
+      else
+        {
+        window.alert("Please enter a 10 digit phone number");
+        return false;
+        }
+    }
   
     //Main Register Function
     const register = async () => {
@@ -51,40 +64,52 @@ function Registration() {
             window.alert("The passwords didn't match, please try again")
         }
         else{
-            try
-            {
-                console.log("registering!")
-              const user = await createUserWithEmailAndPassword(auth,registerEmail,registerPassword);
-              console.log('Here');
-              console.log(mentorBoolean);
-              console.log('Here');
-              if(mentorBoolean == true){
-                  setDoc(doc(db,"Mentors",registerEmail),{  //"Users"- specifies the collection
-                      firstName: registerFName,
-                      surname: registerSName,
-                      emailAddress: registerEmail,
-                      phone: registerPhone,
-                      password: registerPassword
-                    });
-              }
-              else{
-                  setDoc(doc(db,"Mentees",registerEmail),{  //"Users"- specifies the collection
-                    firstName: registerFName,
-                    surname: registerSName,
-                    emailAddress: registerEmail,
-                    phone: registerPhone,
-                    password: registerPassword
-                    });
-              }
-              
-        
-              console.log(user);
-              window.alert("Registration complete!");
-            } 
-            catch(error)
-            {
-              console.log(error.message);
+            if(phoneNumberCheck(registerPhone)){
+                try
+                {
+                    console.log("registering!")
+                  const user = await createUserWithEmailAndPassword(auth,registerEmail,registerPassword);
+                  console.log('Here');
+                  console.log(mentorBoolean);
+                  console.log('Here');
+                  if(mentorBoolean == true){
+                      setDoc(doc(db,"Mentors",registerEmail),{  //"Users"- specifies the collection
+                          firstName: registerFName,
+                          surname: registerSName,
+                          emailAddress: registerEmail,
+                          phone: registerPhone,
+                          password: registerPassword
+                        });
+                  }
+                  else{
+                      setDoc(doc(db,"Mentees",registerEmail),{  //"Users"- specifies the collection
+                        firstName: registerFName,
+                        surname: registerSName,
+                        emailAddress: registerEmail,
+                        phone: registerPhone,
+                        password: registerPassword
+                        });
+                  }
+                  
+            
+                  console.log(user);
+                  window.alert("Registration complete!");
+                } 
+                catch(error)
+                {
+                  console.log(error.message);
+                    if (error.message === 'Firebase: Error (auth/invalid-email).'){
+                        window.alert("Registration error: Please enter a valid email address");
+                    }
+                    else if(error.message === 'Firebase: Error (auth/email-already-in-use).'){
+                        window.alert("Registration error: A user with given email address already exists");
+                    }
+                    else{
+                        window.alert(error.message);
+                    }
+                } 
             }
+            
           }
         };
       
@@ -129,8 +154,10 @@ this line is here to prevent firefox bug
                                         onChange={(event) => {setRegisterPhone(event.target.value);}}
                                     />
                                 </div>
+
                                 <div className="mb-3 col-md-12">
                                     <label>Password<span className="text-danger">*</span></label>
+                                   
                                     <input type="password" name="password" className="form-control" placeholder="Enter Password" required 
                                         onChange={(event) =>{setRegisterPassword(event.target.value);}}
                                     />
@@ -142,8 +169,9 @@ this line is here to prevent firefox bug
                                     />
                                 </div>
 
-                                <div className="mb-3 col-md-12">
-                                    Password should be minimum 6 characters long<span className="text-danger">*</span>
+                                <div className="mb-3 col-md-12" >
+                                    <p style={{fontSize:'0.8rem'}}>Password should be minimum 6 characters long<span className="text-danger">*</span></p>
+                                    <p style={{fontSize:'0.8rem'}}>Phone number should be 10 digits long<span className="text-danger">*</span></p>
                                 </div>
                                 
 
@@ -162,9 +190,8 @@ this line is here to prevent firefox bug
                             
                             </div>
                         </div>
-                        <p className="text-center mt-3 text-secondary">If you already have an account, <Link  to="/Login" className="register">Click here to Login</Link></p>
+                        <p className="text-center mt-3 text-secondary">If you already have an account, <Link  to="/Login" className="">Click here to Login</Link></p>
 
-                        {/* <button className="button2"><Link  to="/Messages">Messages Mentor</Link></button> */}
                     </div>
                 </div>
             </div>

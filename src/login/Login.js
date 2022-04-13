@@ -6,6 +6,13 @@ import { FirebaseError } from 'firebase/app';
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from 'firebase/firestore';
 import {db} from ".././firebase/firebase-config";
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+
 function Login() {
 
     const [loginEmail, setLoginEmail] = useState("");
@@ -62,7 +69,7 @@ function Login() {
                             
                             </div>
                         </form>
-                        <div class="text-center mt-3 text-secondary">Don't have an account? <a href="registration.html">Click here to Register</a> </div>
+                        <div class="text-center mt-3 text-secondary">Don't have an account? <Link  to="/Registration" className="">Click here to Register</Link> </div>
 
                     </div>
                 </div>

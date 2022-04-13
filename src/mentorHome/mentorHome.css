@@ -120,3 +120,9 @@ li.logout{
 li.logout{
 color: #E31B6D;
 }
+
+.menteeBox{
+  background-color: rgb(207,221,225);
+  margin-top: 1em;
+  padding: 2em;
+}
