@@ -150,7 +150,7 @@ export default function Editprofile(){
                         
                       <div className="row mt-4">
                         <div className ="col-md-3"><p className="description">Location:</p></div>
-                        <div className="col-md-9"><input type="text" className="form-control" id = "location"  placeholder={user.location}></input></div>
+                        <div className="col-md-9"><input type="text" className="form-control" id = "location"  defaultValue={user.location}></input></div>
                       </div>
 
                       <div className="row mt-4">
