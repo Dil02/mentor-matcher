@@ -31,6 +31,7 @@ import RaiseTickets from './RaiseTickets/raiseTickets';
 import ViewTickets from './ViewTickets/viewTickets'
 import MentorHome from './mentorHome/MentorHome';
 import MenteeSelection from './MenteeSelection/MenteeSelection';
+import Messages from './Messages/Messages';
 
 // importing images
 import FDMLogo from './logo.png';
@@ -186,8 +187,14 @@ ReactDOM.render(
           <Route path="/RaiseTickets">
             <RaiseTickets />
           </Route>
+          <Route path="/MenteeSelection">
+            <MenteeSelection />
+          </Route>
           <Route path='/ViewTickets'>
             <ViewTickets/>
+          </Route>
+          <Route path='/Messages'>
+            <Messages/>
           </Route>
         </Switch>
       </Router>

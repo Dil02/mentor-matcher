@@ -69,7 +69,7 @@ function Selection() {
       infoArray[i][1] = displayMentors[i].occupation;
       infoArray[i][2] = displayMentors[i].emailAddress;
       infoArray[i][3] = displayMentors[i].phone;
-      infoArray[i][4] = displayMentors[i].description;
+      infoArray[i][4] = displayMentors[i].personalIntroduction;
     }
     
   }
@@ -135,7 +135,7 @@ function Selection() {
               <p>{currentMentor.data().phone}</p>
               <br/>
               <p> <strong>Description: </strong></p>
-              <p>{currentMentor.data().description}</p>
+              <p>{currentMentor.data().personalIntroduction}</p>
               <button onClick={unpair} class="btn btn-outline-danger">UNPAIR</button>
           </div>
         </div>

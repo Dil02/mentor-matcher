@@ -1,22 +1,14 @@
 import React,{ useState,useEffect} from "react";
 import {collection, getDocs, updateDoc, doc,query, where, getFirestore} from 'firebase/firestore';
-import {useAuth, auth } from "../firebase/firebase-config";
+import {useAuth,auth } from "../firebase/firebase-config";
 import Profile from "./Profile";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import "firebase/auth";
 
 export default function Editprofile(){
 
-    let myEmailAddress="";
+
     const currentUser = useAuth();
 
-    //New Changes:
-    onAuthStateChanged(auth, (user) => {
-      if(user){
-        console.log("Current user's email address is: " + user.email);
-        myEmailAddress=user.email;
-      }
-    })
-    //New Changes above.
 
     const updateprofile = async (id,personalIntroduction,Qualifications,sector,location,phone,presentationskills,designThinking,leadershipSkills,verbalCommunications,careerProgression,coding,occupation,profilefname,surname) =>{
       const profiledoc = doc(db, "Mentees",id);
@@ -32,7 +24,7 @@ export default function Editprofile(){
 
     const tempFunction = async() =>{
 
-      const q=query(colRef,where("emailAddress","==", myEmailAddress));
+      const q=query(colRef,where("emailAddress","==", "mentee@test.com"));
   
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {

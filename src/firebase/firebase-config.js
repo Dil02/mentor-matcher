@@ -6,16 +6,14 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDeLrQAn7IgFWQxJ9D9aIm3sSYYmkPyP5Q",
-  authDomain: "backupmatcher.firebaseapp.com",
-  projectId: "backupmatcher",
-  storageBucket: "backupmatcher.appspot.com",
-  messagingSenderId: "388124589351",
-  appId: "1:388124589351:web:adb07ebd9e4b46724f3d02",
-  measurementId: "G-LEFH4BKBPD"
+    apiKey: "AIzaSyBDFQX8ZI5dzA2NAnXj752bcVaoRl6I_Kk",
+    authDomain: "mentor-matcher-g14.firebaseapp.com",
+    projectId: "mentor-matcher-g14",
+    storageBucket: "mentor-matcher-g14.appspot.com",
+    messagingSenderId: "236114227145",
+    appId: "1:236114227145:web:ef51ed9699906dbc2b8218",
+    measurementId: "G-BMFHK0P8JJ"
 };
-
-//ABOVE IS FOR BACKUP FIREBASE PROJECT!!!!!!!!!!!!^^^^^
 
 const app= initializeApp(firebaseConfig);
 

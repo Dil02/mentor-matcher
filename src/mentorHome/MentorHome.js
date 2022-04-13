@@ -73,7 +73,7 @@ function MentorHome() {
                                     <p><b>Occupation: </b>{user.occupation}</p>
                                     <p><b>Sector: </b>{user.sector}</p>
                                     <p><b>Qualification: </b>{user.Qualifications}</p>
-                                    <p><b>Occupation: </b>{user.occupation}</p>
+                                    <p><b>Location: </b>{user.location}</p>
                                     <hr/>
                                     <p className='text-center'><b>Keep your profile updated using the Edit Profile page</b></p>
                                 </div>
